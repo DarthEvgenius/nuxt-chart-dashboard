@@ -1,11 +1,9 @@
 <template>
   <v-btn
     :icon="themeIcon"
-    variant="text"
     size="small"
     @click="toggleTheme"
     :title="themeTitle"
-    class="theme-toggle"
   >
     <v-icon :icon="themeIcon" />
   </v-btn>
@@ -29,13 +27,3 @@ const toggleTheme = () => {
   theme.change(nextTheme) 
 }
 </script>
-
-<style scoped>
-.theme-toggle {
-  transition: transform 0.3s ease;
-}
-
-.theme-toggle:hover {
-  transform: rotate(15deg);
-}
-</style>

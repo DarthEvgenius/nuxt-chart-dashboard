@@ -6,22 +6,27 @@
         <v-row class="mb-4">
           <v-col cols="12">
             <v-card class="pa-4">
-              <v-row align="center" class="flex-wrap">
-                <v-col cols="12" md="6">
+              <v-row align="start" class="flex-wrap">
+                <v-col cols="11" md="6">
                   <div class="d-flex align-center">
                     <h1 class="text-h4 text-primary font-weight-bold">
                       Аналитический дашборд
                     </h1>
-                    <ThemeToggle class="ml-4" />
                   </div>
+
                   <div class="text-caption text-medium-emphasis mt-1">
                     Обзор продаж и пользовательской активности
                   </div>
                 </v-col>
 
-                <v-col class="flex-shrink-1">
+                <v-col cols="12" md="5" order="2" order-md="0">
                   <PeriodFilters />
                 </v-col>
+
+                <v-col cols="1" class="flex">
+                  <ThemeToggle />
+                </v-col>
+                
               </v-row>
             </v-card>
           </v-col>
@@ -93,12 +98,14 @@
                 <div class="text-caption text-medium-emphasis">
                   Всего записей за период
                 </div>
+                
                 <div class="text-h6 font-weight-bold">
                   {{ dashboardStore.salesData.length }} продаж
                 </div>
               </v-card-text>
             </v-card>
           </v-col>
+          
           <v-col cols="12" md="6">
             <v-card variant="outlined">
               <v-card-text class="text-center">

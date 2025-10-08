@@ -4,7 +4,7 @@
       <span>Динамика продаж по категориям</span>
       <v-spacer></v-spacer>
       <v-chip variant="outlined" size="small">
-        {{ totalSales }} ₽
+        Всего: {{ totalSales }} ₽
       </v-chip>
     </v-card-title>
     
