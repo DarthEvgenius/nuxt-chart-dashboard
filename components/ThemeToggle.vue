@@ -25,7 +25,8 @@ const themeTitle = computed(() =>
 )
 
 const toggleTheme = () => {
-  theme.global.name.value = theme.global.name.value === 'light' ? 'dark' : 'light'
+  const nextTheme = theme.global.name.value === 'light' ? 'dark' : 'light'
+  theme.change(nextTheme) 
 }
 </script>
 

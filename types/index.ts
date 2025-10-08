@@ -18,7 +18,6 @@ export const isCategory = (value: string): value is TCategory => {
   return CATEGORIES.includes(value as TCategory)
 }
 
-// Вспомогательный тип для данных
 export interface ISalesData {
   date: string // YYYY-MM-DD
   amount: number

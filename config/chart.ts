@@ -1,5 +1,4 @@
 import type { TCategory } from '~/types'
-import { CATEGORIES } from '~/types'
 
 export const CHART_CONFIG = {
   // Цвета для категорий

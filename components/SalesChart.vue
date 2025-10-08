@@ -91,7 +91,7 @@ const totalSales = computed(() => {
 const chartOptions = computed<ChartOptions<'line'>>(() => {
   const isDark = theme.global.name.value === 'dark'
   const textColor = isDark ? '#e2e8f0' : '#374151'
-  const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)'
   const tooltipBg = isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(99, 102, 241, 0.95)'
   
   return {
@@ -106,10 +106,6 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
         position: 'top',
         labels: {
           usePointStyle: true,
-          padding: 15,
-          font: {
-            size: 12
-          },
           color: textColor
         }
       },
@@ -118,15 +114,15 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
         titleColor: 'white',
         bodyColor: 'white',
         titleFont: {
-          size: 13
+          size: 16
         },
         bodyFont: {
-          size: 13
+          size: 14
         },
         padding: 12,
-        cornerRadius: 8,
         displayColors: true,
         callbacks: {
+          // формирование строк в тултипах
           label: function(context) {
             const label = context.dataset.label || ''
             const value = context.parsed.y.toLocaleString('ru-RU')
@@ -138,12 +134,9 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
     scales: {
       x: {
         grid: {
-          display: false
+          color: gridColor
         },
         ticks: {
-          font: {
-            size: 11
-          },
           color: textColor
         }
       },
@@ -153,33 +146,17 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
           color: gridColor
         },
         ticks: {
-          font: {
-            size: 11
-          },
           color: textColor,
           callback: function(value) {
+            // форматируем числа для подписей чекпойнтов
             return value.toLocaleString('ru-RU') + ' ₽'
           }
         }
       }
     },
     animation: {
-      duration: 2000,
+      duration: 1000,
       easing: 'easeOutQuart',
-    },
-    animations: {
-      tension: {
-        duration: 2000,
-        easing: 'easeOutQuart',
-        from: 0.8,
-        to: 0.4
-      },
-      points: {
-        duration: 1000,
-        easing: 'easeOutBounce',
-        from: 1,
-        to: 0.5
-      }
     },
     elements: {
       point: {
@@ -187,27 +164,12 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
         hoverRadius: 8,
         hoverBackgroundColor: isDark ? '#1e293b' : 'white',
         hoverBorderWidth: 3,
-        animation: {
-          duration: 1500,
-          easing: 'easeOutElastic'
-        }
       },
       line: {
-        tension: 0.4,
+        tension: 0.3,
         borderWidth: 3,
-        animation: {
-          duration: 2000,
-          easing: 'easeOutQuart'
-        }
       }
     },
-    transitions: {
-      active: {
-        animation: {
-          duration: 500
-        }
-      }
-    }
   }
 })
 </script>
@@ -281,8 +243,6 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
   }
 }
 
-
-/* Адаптивность */
 @media (max-width: 768px) {
   .chart-container {
     height: 300px;

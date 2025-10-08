@@ -61,6 +61,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         data: dates.map(date => {
           return salesData.value
             .filter(item => item.date === date && item.category === category)
+            // на основе этой суммы автоматически рассчитывается ось Y на графике
             .reduce((sum, item) => sum + item.amount, 0)
         }),
         borderColor: color,
@@ -76,7 +77,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
       }
     })
     
-    const result = { labels: dates, datasets }
+
+    const result = {
+      // даты для оси Х в графике
+      labels: dates,
+      datasets,
+    }
 
     // Сохраняем в кэш
     chartCache = result
@@ -252,3 +258,5 @@ export const useDashboardStore = defineStore('dashboard', () => {
     validateSalesData
   }
 })
+
+

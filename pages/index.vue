@@ -6,7 +6,7 @@
         <v-row class="mb-4">
           <v-col cols="12">
             <v-card class="pa-4">
-              <v-row align="center" class="flex-nowrap">
+              <v-row align="center" class="flex-wrap">
                 <v-col cols="12" md="6">
                   <div class="d-flex align-center">
                     <h1 class="text-h4 text-primary font-weight-bold">
@@ -18,6 +18,7 @@
                     Обзор продаж и пользовательской активности
                   </div>
                 </v-col>
+
                 <v-col class="flex-shrink-1">
                   <PeriodFilters />
                 </v-col>
