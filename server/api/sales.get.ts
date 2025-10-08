@@ -59,7 +59,7 @@ function generateSalesData(startDate: Date, endDate: Date): ISalesData[] {
     'Электроника': { min: 500, max: 3000 },
     'Одежда': { min: 200, max: 1200 },
     'Книги': { min: 100, max: 600 },
-    'Другое': { min: 50, max: 400 }
+    'Другое': { min: 50, max: 400 },
   }
 
   // Генерируем данные для каждого дня в диапазоне

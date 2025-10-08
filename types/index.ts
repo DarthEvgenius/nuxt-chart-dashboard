@@ -10,7 +10,7 @@ export const CATEGORIES: TCategory[] = [
   'Электроника',
   'Одежда', 
   'Книги',
-  'Другое'
+  'Другое',
 ]
 
 // Type Guard для проверки категорий
@@ -33,4 +33,13 @@ export interface IMetrics {
   uniqueUsers: number
 }
 
-export type MetricKey = keyof IMetrics
+type MetricKey = keyof IMetrics
+
+export interface MetricCardConfig {
+  title: string
+  key: MetricKey
+  format: 'currency' | 'number' | 'percent'
+  trend?: number
+  variant: 'default' | 'primary' | 'secondary'
+  icon: string
+}

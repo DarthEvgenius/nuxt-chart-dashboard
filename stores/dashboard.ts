@@ -7,12 +7,14 @@ import { isCategory } from "~/types"
 export const useDashboardStore = defineStore('dashboard', () => {
   // State
   const selectedPeriod = ref<TPeriod>('week')
+
   const dateRange = ref<{ start: string; end: string }>({
     start: getWeekAgo(),
     end: getToday(),
   })
 
   const salesData = ref<ISalesData[]>([])
+  
   const metrics = ref<IMetrics>({
     totalRevenue: 0,
     totalOrders: 0,
@@ -152,7 +154,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       // Mock расчет уникальных пользователей (в реальном приложении это было бы из API)
       const uniqueDates = new Set(data.map(item => item.date)).size
       
-      const uniqueUsers = uniqueDates * 150 // Примерная конверсия
+      const uniqueUsers = uniqueDates * 150
 
       metrics.value = {
         totalRevenue,
@@ -258,5 +260,3 @@ export const useDashboardStore = defineStore('dashboard', () => {
     validateSalesData
   }
 })
-
-

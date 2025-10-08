@@ -1,6 +1,6 @@
 <template>
-  <div class="period-filters">
-    <div class="d-flex flex-wrap align-center gap-2">
+  <div>
+    <div class="d-flex flex-wrap align-center ga-2">
       <v-btn
         v-for="period in quickPeriods"
         :key="period.value"
@@ -13,7 +13,10 @@
       </v-btn>
 
       <!-- Кастомный диапазон -->
-      <v-dialog v-model="customDialog" max-width="400">
+      <v-dialog
+        v-model="customDialog"
+        max-width="400"
+      >
         <template v-slot:activator="{ props: activatorProps }">
           <v-btn
             v-bind="activatorProps"
@@ -26,15 +29,19 @@
         </template>
 
         <v-card>
-          <v-card-title>Выберите период</v-card-title>
+          <v-card-title>
+            Выберите период
+          </v-card-title>
+
           <v-card-text>
-            <div class="d-flex flex-column gap-3">
+            <div class="d-flex flex-column ga-3">
               <v-text-field
                 v-model="customStart"
                 label="Начальная дата"
                 type="date"
                 density="compact"
               />
+
               <v-text-field
                 v-model="customEnd"
                 label="Конечная дата"
@@ -43,11 +50,17 @@
               />
             </div>
           </v-card-text>
+
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn variant="text" @click="customDialog = false">
+
+            <v-btn
+              variant="text"
+              @click="customDialog = false"
+              >
               Отмена
             </v-btn>
+
             <v-btn color="primary" @click="applyCustomRange">
               Применить
             </v-btn>
@@ -104,24 +117,3 @@ watch(customDialog, (isOpen) => {
   }
 })
 </script>
-
-<style scoped>
-.period-filters {
-  width: 100%;
-}
-
-.gap-2 {
-  gap: 8px;
-}
-
-.gap-3 {
-  gap: 12px;
-}
-
-/* Адаптация для мобильных устройств в тёмной теме */
-/* @media (max-width: 960px) {
-  :deep(.v-theme--dark) .period-filters {
-    background: transparent;
-  }
-} */
-</style>

@@ -6,7 +6,7 @@
       `metric-${variant}`,
       { 'metric-loading': loading }
     ]"
-    :style="cardStyle"
+    :style="getAnimationDelay(delay)"
   >
     <v-card-text class="pa-4">
       <div class="d-flex align-center justify-space-between">
@@ -14,6 +14,7 @@
           <div class="text-caption text-medium-emphasis font-weight-medium">
             {{ title }}
           </div>
+          
           <div class="text-h5 font-weight-bold mt-1" :class="valueColor">
             {{ formattedValue }}
           </div>
@@ -63,10 +64,6 @@ const props = withDefaults(defineProps<Props>(), {
   delay: 0
 })
 
-// Анимированное появление с задержкой
-const cardStyle = computed(() => ({
-  animationDelay: `${props.delay}ms`
-}))
 
 const formattedValue = computed(() => {
   switch (props.format) {

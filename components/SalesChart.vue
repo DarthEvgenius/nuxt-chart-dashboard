@@ -9,7 +9,10 @@
     </v-card-title>
     
     <v-card-text class="pa-0">
-      <div class="chart-container" :class="{ 'chart-loading': isLoading }">
+      <div
+        class="chart-container"
+        :class="{ 'chart-loading': isLoading }"
+      >
         <!-- skeleton loader -->
         <ChartSkeleton v-if="isLoading" />
         

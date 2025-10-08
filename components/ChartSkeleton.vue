@@ -11,12 +11,12 @@
         >
           <div
             class="skeleton-legend-color shimmer"
-            :style="getAnimationDelay(i)"
+            :style="getAnimationDelay(i * 100)"
           ></div>
 
           <div
             class="skeleton-legend-text shimmer"
-            :style="getAnimationDelay(i)"
+            :style="getAnimationDelay(i * 100)"
           ></div>
         </div>
       </div>
@@ -28,7 +28,7 @@
           v-for="i in yAxisLabels"
           :key="i"
           class="skeleton-y-label shimmer"
-          :style="getAnimationDelay(i)"
+          :style="getAnimationDelay(i * 100)"
         ></div>
       </div>
 
@@ -37,7 +37,7 @@
           v-for="i in lines"
           :key="i"
           class="skeleton-line-container"
-          :style="getAnimationDelay(i)"
+          :style="getAnimationDelay(i * 100)"
         >
           <div 
             class="skeleton-line shimmer"
@@ -49,7 +49,7 @@
             v-for="i in xAxisLabels"
             :key="i"
             class="skeleton-x-label shimmer"
-            :style="getAnimationDelay(i)"
+            :style="getAnimationDelay(i * 100)"
           ></div>
         </div>
       </div>
@@ -71,13 +71,6 @@ withDefaults(defineProps<Props>(), {
   xAxisLabels: 8,
   lines: 4
 })
-
-// конфиг для задежки анимаций
-const animationDelayStep = 0.1
-
-const getAnimationDelay = (index: number) => {
-  return { animationDelay: `${index * animationDelayStep}s` }
-}
 
 </script>
 

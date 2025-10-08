@@ -98,7 +98,7 @@
                 <div class="text-caption text-medium-emphasis">
                   Всего записей за период
                 </div>
-                
+
                 <div class="text-h6 font-weight-bold">
                   {{ dashboardStore.salesData.length }} продаж
                 </div>
@@ -125,64 +125,21 @@
 </template>
 
 <script setup lang="ts">
-import type { MetricKey } from '~/types'
+import { metricCards } from '~/config/metricCards'
+import { CATEGORIES } from '~/types'
 
 const dashboardStore = useDashboardStore()
 
-const totalCategories = 4 // Всего категорий в системе
+const totalCategories = CATEGORIES.length // Всего категорий в системе
 
-interface MetricCardConfig {
-  title: string
-  key: MetricKey
-  format: 'currency' | 'number' | 'percent'
-  trend?: number
-  variant: 'default' | 'primary' | 'secondary'
-  icon: string
-}
-
-// Конфигурация карточек метрик
-const metricCards: MetricCardConfig[] = [
-  { 
-    title: 'Общий доход', 
-    key: 'totalRevenue', 
-    format: 'currency' as const,
-    trend: 12.5,
-    variant: 'primary' as const,
-    icon: 'mdi-cash'
-  },
-  { 
-    title: 'Количество заказов', 
-    key: 'totalOrders', 
-    format: 'number' as const,
-    trend: -8.3,
-    variant: 'secondary' as const,
-    icon: 'mdi-shopping'
-  },
-  { 
-    title: 'Средний чек', 
-    key: 'averageOrder', 
-    format: 'currency' as const,
-    trend: 3.7,
-    variant: 'default' as const,
-    icon: 'mdi-receipt'
-  },
-  { 
-    title: 'Уникальные пользователи', 
-    key: 'uniqueUsers', 
-    format: 'number' as const,
-    trend: 15.2,
-    variant: 'default' as const,
-    icon: 'mdi-account-group'
-  }
-]
 
 // Загрузка данных при монтировании уже происходит в store
 // Но на случай если нужно переопределить
-onMounted(() => {
-  if (!dashboardStore.hasData && !dashboardStore.isLoading) {
-    dashboardStore.fetchData()
-  }
-})
+// onMounted(() => {
+//   if (!dashboardStore.hasData && !dashboardStore.isLoading) {
+//     dashboardStore.fetchData()
+//   }
+// })
 </script>
 
 <style scoped>
@@ -204,13 +161,4 @@ onMounted(() => {
   }
 }
 
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
-
-@media (max-width: 960px) {
-  .flex-nowrap {
-    flex-wrap: wrap;
-  }
-}
 </style>

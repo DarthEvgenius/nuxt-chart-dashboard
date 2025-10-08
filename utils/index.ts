@@ -1,4 +1,6 @@
-// Функция для добавления прозрачности (для background colors)
+/** 
+ * Функция для добавления прозрачности (для background colors)
+*/
 export const addColorOpacity = (color: string, opacity: number = 0.2): string => {
   if (color.startsWith('#')) {
     const r = parseInt(color.slice(1, 3), 16)
@@ -9,3 +11,9 @@ export const addColorOpacity = (color: string, opacity: number = 0.2): string =>
   return color
 }
 
+/**
+ * Возвращает объект стилей для отложенной анимации
+*/
+export const getAnimationDelay = (delay: number) => {
+  return { animationDelay: `${delay}ms` }
+}
