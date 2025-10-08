@@ -1,7 +1,6 @@
 <template>
   <div class="period-filters">
     <div class="d-flex flex-wrap align-center gap-2">
-      <!-- Быстрые периоды -->
       <v-btn
         v-for="period in quickPeriods"
         :key="period.value"
@@ -9,7 +8,6 @@
         :color="selectedPeriod === period.value ? 'primary' : undefined"
         size="small"
         @click="setPeriod(period.value)"
-        :loading="isLoading && selectedPeriod === period.value"
       >
         {{ period.title }}
       </v-btn>
@@ -81,7 +79,6 @@ const quickPeriods = [
 ]
 
 const selectedPeriod = computed(() => dashboardStore.selectedPeriod)
-const isLoading = computed(() => dashboardStore.isLoading)
 
 const formattedDateRange = computed(() => {
   const { start, end } = dashboardStore.formattedDateRange
@@ -122,9 +119,9 @@ watch(customDialog, (isOpen) => {
 }
 
 /* Адаптация для мобильных устройств в тёмной теме */
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
   :deep(.v-theme--dark) .period-filters {
     background: transparent;
   }
-}
+} */
 </style>

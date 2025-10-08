@@ -2,9 +2,10 @@
   <v-card 
     :loading="loading" 
     class="metric-card"
-    :class="[`metric-${variant}`, { 'metric-loading': loading }]"
-    elevation="2"
-    rounded="lg"
+    :class="[
+      `metric-${variant}`,
+      { 'metric-loading': loading }
+    ]"
     :style="cardStyle"
   >
     <v-card-text class="pa-4">
@@ -166,28 +167,6 @@ const iconColor = computed(() => {
   }
 }
 
-/* Адаптация для тёмной темы */
-:deep(.v-theme--dark) .metric-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
-}
-
-:deep(.v-theme--light) .metric-card:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Анимация для тренда */
-.text-success {
-  animation: trendPulse 2s infinite;
-}
-
-@keyframes trendPulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
 
 /* Задержки для последовательной анимации карточек */
 .metric-card:nth-child(1) { animation-delay: 0ms; }

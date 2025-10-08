@@ -1,5 +1,5 @@
 <template>
-  <v-card class="sales-chart" elevation="2" rounded="lg">
+  <v-card class="sales-chart">
     <v-card-title class="d-flex align-center">
       <span>Динамика продаж по категориям</span>
       <v-spacer></v-spacer>
@@ -10,31 +10,8 @@
     
     <v-card-text class="pa-0">
       <div class="chart-container" :class="{ 'chart-loading': isLoading }">
-        <!-- Улучшенный Skeleton loader -->
-        <div v-if="isLoading" class="chart-skeleton">
-          <div class="skeleton-header">
-            <div class="skeleton-title shimmer"></div>
-            <div class="skeleton-legend">
-              <div v-for="i in 4" :key="i" class="skeleton-legend-item">
-                <div class="skeleton-legend-color shimmer"></div>
-                <div class="skeleton-legend-text shimmer"></div>
-              </div>
-            </div>
-          </div>
-          <div class="skeleton-chart-area">
-            <div class="skeleton-y-axis">
-              <div v-for="i in 6" :key="i" class="skeleton-y-label shimmer"></div>
-            </div>
-            <div class="skeleton-graph">
-              <div v-for="i in 4" :key="i" class="skeleton-line-container">
-                <div class="skeleton-line shimmer" :style="getLineStyle(i)"></div>
-              </div>
-              <div class="skeleton-x-axis">
-                <div v-for="i in 8" :key="i" class="skeleton-x-label shimmer"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- skeleton loader -->
+        <ChartSkeleton v-if="isLoading" />
         
         <!-- Empty state -->
         <div v-else-if="!hasData" class="chart-empty">
@@ -58,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { useTheme } from 'vuetify'
 import { Line } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -90,11 +68,11 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { $theme } = useNuxtApp()
+const theme = useTheme()
 
 const chartKey = ref(0)
 
-watch(() => $theme.current.value, () => {
+watch(() => theme.global.name.value, () => {
   chartKey.value++
 })
 
@@ -110,20 +88,8 @@ const totalSales = computed(() => {
     .toLocaleString('ru-RU')
 })
 
-// Функция для генерации случайных стилей линий скелетона
-const getLineStyle = (index: number) => {
-  const heights = [65, 45, 80, 30, 60, 25, 70, 50]
-  const delays = [0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1]
-  
-  return {
-    height: `${heights[index % heights.length]}%`,
-    animationDelay: `${delays[index % delays.length]}s`
-  }
-}
-
-// Улучшенные опции Chart.js с расширенными анимациями
 const chartOptions = computed<ChartOptions<'line'>>(() => {
-  const isDark = $theme.current.value === 'dark'
+  const isDark = theme.global.name.value === 'dark'
   const textColor = isDark ? '#e2e8f0' : '#374151'
   const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)'
   const tooltipBg = isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(99, 102, 241, 0.95)'
@@ -197,16 +163,9 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
         }
       }
     },
-    // Расширенные настройки анимации
     animation: {
       duration: 2000,
       easing: 'easeOutQuart',
-      onProgress: function(animation: any) {
-        // Дополнительные callback'и для анимации
-      },
-      onComplete: function() {
-        // Анимация завершена
-      }
     },
     animations: {
       tension: {
@@ -228,7 +187,6 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
         hoverRadius: 8,
         hoverBackgroundColor: isDark ? '#1e293b' : 'white',
         hoverBorderWidth: 3,
-        // Анимация точек
         animation: {
           duration: 1500,
           easing: 'easeOutElastic'
@@ -237,7 +195,6 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
       line: {
         tension: 0.4,
         borderWidth: 3,
-        // Анимация линий
         animation: {
           duration: 2000,
           easing: 'easeOutQuart'
@@ -283,126 +240,15 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
   transition: opacity 0.3s ease;
 }
 
-/* Улучшенный скелетон */
-.chart-skeleton {
+.chart-empty {
   height: 100%;
-  padding: 16px;
-  position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.skeleton-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-
-.skeleton-title {
-  width: 200px;
-  height: 24px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-
-.skeleton-legend {
-  display: flex;
-  gap: 16px;
-}
-
-.skeleton-legend-item {
-  display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
-.skeleton-legend-color {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-
-.skeleton-legend-text {
-  width: 60px;
-  height: 12px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-
-.skeleton-chart-area {
-  flex: 1;
-  display: flex;
-  gap: 12px;
-  position: relative;
-}
-
-.skeleton-y-axis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 50px;
-}
-
-.skeleton-y-label {
-  width: 40px;
-  height: 12px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-
-.skeleton-graph {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.skeleton-line-container {
-  flex: 1;
-  position: relative;
-  margin-bottom: 4px;
-}
-
-.skeleton-line {
-  width: 100%;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeletonWave 2s infinite;
-  position: absolute;
-  bottom: 0;
-}
-
-.skeleton-x-axis {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  height: 20px;
-}
-
-.skeleton-x-label {
-  width: 30px;
-  height: 12px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-
-/* Эффект мерцания (shimmer) */
-.shimmer {
-  animation: skeletonWave 2s infinite;
-  background-size: 200% 100%;
-}
-
-/* Keyframe анимации */
 @keyframes chartSlideIn {
   0% {
     opacity: 0;
@@ -435,83 +281,11 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
   }
 }
 
-@keyframes skeletonWave {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes skeletonPulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-/* Анимация для смены темы */
-:deep(.v-theme--dark) .skeleton-title,
-:deep(.v-theme--dark) .skeleton-legend-color,
-:deep(.v-theme--dark) .skeleton-legend-text,
-:deep(.v-theme--dark) .skeleton-y-label,
-:deep(.v-theme--dark) .skeleton-line,
-:deep(.v-theme--dark) .skeleton-x-label {
-  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
-}
-
-/* Дополнительная анимация для всего скелетона */
-.chart-skeleton::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  animation: skeletonShimmer 2s infinite;
-  z-index: 2;
-}
-
-:deep(.v-theme--dark) .chart-skeleton::before {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-}
-
-@keyframes skeletonShimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
 
 /* Адаптивность */
 @media (max-width: 768px) {
   .chart-container {
     height: 300px;
-  }
-  
-  .skeleton-legend {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .skeleton-legend-item {
-    flex: 0 0 calc(50% - 8px);
   }
   
   @keyframes chartSlideIn {
@@ -526,45 +300,4 @@ const chartOptions = computed<ChartOptions<'line'>>(() => {
   }
 }
 
-/* Улучшенная анимация для точек графика при hover */
-:deep(.chartjs-render-monitor) {
-  transition: all 0.3s ease;
-}
-
-:deep(.chartjs-render-monitor:hover) {
-  filter: brightness(1.05);
-}
-
-/* Увеличиваем размер скелетона и добавляем глубину */
-.chart-skeleton {
-  transform: scale(1.02);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
-
-.chart-loading .chart-skeleton {
-  animation: skeletonPulse 2s ease-in-out infinite;
-}
-
-/* Задержки для последовательной анимации элементов скелетона */
-.skeleton-y-label:nth-child(1) { animation-delay: 0.1s; }
-.skeleton-y-label:nth-child(2) { animation-delay: 0.2s; }
-.skeleton-y-label:nth-child(3) { animation-delay: 0.3s; }
-.skeleton-y-label:nth-child(4) { animation-delay: 0.4s; }
-.skeleton-y-label:nth-child(5) { animation-delay: 0.5s; }
-.skeleton-y-label:nth-child(6) { animation-delay: 0.6s; }
-
-.skeleton-legend-item:nth-child(1) .shimmer { animation-delay: 0.1s; }
-.skeleton-legend-item:nth-child(2) .shimmer { animation-delay: 0.2s; }
-.skeleton-legend-item:nth-child(3) .shimmer { animation-delay: 0.3s; }
-.skeleton-legend-item:nth-child(4) .shimmer { animation-delay: 0.4s; }
-
-.skeleton-x-label:nth-child(1) { animation-delay: 0.1s; }
-.skeleton-x-label:nth-child(2) { animation-delay: 0.2s; }
-.skeleton-x-label:nth-child(3) { animation-delay: 0.3s; }
-.skeleton-x-label:nth-child(4) { animation-delay: 0.4s; }
-.skeleton-x-label:nth-child(5) { animation-delay: 0.5s; }
-.skeleton-x-label:nth-child(6) { animation-delay: 0.6s; }
-.skeleton-x-label:nth-child(7) { animation-delay: 0.7s; }
-.skeleton-x-label:nth-child(8) { animation-delay: 0.8s; }
 </style>

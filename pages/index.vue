@@ -1,11 +1,11 @@
 <template>
-  <v-app  :theme="$theme.current.value">
+  <v-app>
     <v-main>
       <v-container fluid class="pa-4 pa-md-6 dashboard-container">
         <!-- Заголовок и фильтры -->
         <v-row class="mb-4">
           <v-col cols="12">
-            <v-card class="pa-4" elevation="1" rounded="lg">
+            <v-card class="pa-4">
               <v-row align="center" class="flex-nowrap">
                 <v-col cols="12" md="6">
                   <div class="d-flex align-center">
@@ -87,7 +87,7 @@
         <!-- Дополнительная информация -->
         <v-row v-if="!dashboardStore.isLoading && dashboardStore.hasData" class="mt-4">
           <v-col cols="12" md="6">
-            <v-card variant="outlined" rounded="lg">
+            <v-card variant="outlined">
               <v-card-text class="text-center">
                 <div class="text-caption text-medium-emphasis">
                   Всего записей за период
@@ -99,7 +99,7 @@
             </v-card>
           </v-col>
           <v-col cols="12" md="6">
-            <v-card variant="outlined" rounded="lg">
+            <v-card variant="outlined">
               <v-card-text class="text-center">
                 <div class="text-caption text-medium-emphasis">
                   Активные категории
@@ -146,7 +146,7 @@ const metricCards: MetricCardConfig[] = [
     title: 'Количество заказов', 
     key: 'totalOrders', 
     format: 'number' as const,
-    trend: 8.3,
+    trend: -8.3,
     variant: 'secondary' as const,
     icon: 'mdi-shopping'
   },
@@ -168,8 +168,8 @@ const metricCards: MetricCardConfig[] = [
   }
 ]
 
-// Загрузка данных при монтировании (уже происходит в store)
-// Но оставим на случай если нужно переопределить
+// Загрузка данных при монтировании уже происходит в store
+// Но на случай если нужно переопределить
 onMounted(() => {
   if (!dashboardStore.hasData && !dashboardStore.isLoading) {
     dashboardStore.fetchData()
@@ -181,16 +181,6 @@ onMounted(() => {
 .dashboard-container {
   min-height: 100vh;
   background-color: #f8fafc;
-}
-
-/* Светлая тема */
-:global(.v-theme--light) .dashboard-container {
-  background-color: #f8fafc;
-}
-
-/* Тёмная тема */
-:global(.v-theme--dark) .dashboard-container {
-  background-color: #0f172a;
 }
 
 /* Адаптивные стили */
