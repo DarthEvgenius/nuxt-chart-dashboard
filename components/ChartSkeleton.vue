@@ -190,7 +190,7 @@ withDefaults(defineProps<Props>(), {
   background-size: 200% 100%;
 }
 
-/* Эффект мерцания (shimmer) */
+/* Эффект мерцания */
 .shimmer {
   animation: skeletonWave 2s infinite;
   background-size: 200% 100%;

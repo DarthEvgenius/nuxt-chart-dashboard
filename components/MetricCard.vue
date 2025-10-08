@@ -163,11 +163,4 @@ const iconColor = computed(() => {
     opacity: 0.7;
   }
 }
-
-
-/* Задержки для последовательной анимации карточек */
-.metric-card:nth-child(1) { animation-delay: 0ms; }
-.metric-card:nth-child(2) { animation-delay: 100ms; }
-.metric-card:nth-child(3) { animation-delay: 200ms; }
-.metric-card:nth-child(4) { animation-delay: 300ms; }
 </style>

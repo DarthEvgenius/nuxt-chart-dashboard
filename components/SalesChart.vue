@@ -2,7 +2,9 @@
   <v-card class="sales-chart">
     <v-card-title class="d-flex align-center">
       <span>Динамика продаж по категориям</span>
+
       <v-spacer></v-spacer>
+
       <v-chip variant="outlined" size="small">
         Всего: {{ totalSales }} ₽
       </v-chip>
@@ -18,9 +20,17 @@
         
         <!-- Empty state -->
         <div v-else-if="!hasData" class="chart-empty">
-          <v-icon size="64" class="mb-2">mdi-chart-line</v-icon>
-          <div class="text-h6">Нет данных для отображения</div>
-          <div class="text-caption">Выберите другой период</div>
+          <v-icon size="64" class="mb-2">
+            mdi-chart-line
+          </v-icon>
+          
+          <div class="text-h6">
+            Нет данных для отображения
+          </div>
+
+          <div class="text-caption">
+            Выберите другой период
+          </div>
         </div>
         
         <!-- Chart with animations -->

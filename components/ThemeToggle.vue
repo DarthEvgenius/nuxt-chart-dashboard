@@ -4,6 +4,7 @@
     size="small"
     @click="toggleTheme"
     :title="themeTitle"
+    class="theme-btn"
   >
     <v-icon :icon="themeIcon" />
   </v-btn>
